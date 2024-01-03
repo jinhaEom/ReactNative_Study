@@ -1,1 +1,1 @@
-# react Native Study
+# javascript Study
