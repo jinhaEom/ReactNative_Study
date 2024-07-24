@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "practical-guide-code",
-    "slug": "practical-guide-code",
+    "name": "food-category-rn-app",
+    "slug": "food-category-rn-app",
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -22,9 +22,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-font"
-    ]
+    }
   }
 }
