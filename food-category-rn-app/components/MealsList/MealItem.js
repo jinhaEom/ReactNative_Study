@@ -7,8 +7,15 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import MealDetails from "./MealDetails";
-function MealItem({ id, title, imageUrl, duration, complexity, affordability }) {
+import MealDetails from "../MealDetails";
+function MealItem({
+  id,
+  title,
+  imageUrl,
+  duration,
+  complexity,
+  affordability,
+}) {
   const navigation = useNavigation();
 
   function selectMealItemHandler() {
@@ -16,7 +23,6 @@ function MealItem({ id, title, imageUrl, duration, complexity, affordability }) 
       mealId: id,
     });
   }
-
 
   return (
     <View style={styles.mealItem}>
@@ -31,8 +37,11 @@ function MealItem({ id, title, imageUrl, duration, complexity, affordability }) 
             <Text style={styles.title}>{title}</Text>
           </View>
         </View>
-        <MealDetails duration={duration} affordability={affordability} complexity={complexity} />
-       
+        <MealDetails
+          duration={duration}
+          affordability={affordability}
+          complexity={complexity}
+        />
       </Pressable>
     </View>
   );
@@ -70,5 +79,4 @@ const styles = StyleSheet.create({
   buttonPressed: {
     opacity: 0.5,
   },
-
 });
