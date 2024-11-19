@@ -11,10 +11,10 @@ const todoSlice = createSlice({
             state.todos.push({
                 id: state.currentId++,
                 text: action.payload.trim(),
-                state: 'todo'
-            })
+                state : 'todo'
+          })  
         },
-        updateTodo: (state, action) => {
+        updateTodo(state, action) {
             const item = state.todos.findIndex((item) => item.id === action.payload);
             state.todos[item].state = state.todos[item].state === 'todo' ? 'done' : 'todo';
             state.todos.push(state.todos.splice(item, 1)[0]);
