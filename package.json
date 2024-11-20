@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "react-devtools-core": "^6.0.1"
+  },
+  "dependencies": {
+    "react-redux": "^9.1.2"
   }
 }

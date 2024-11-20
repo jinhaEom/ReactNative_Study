@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
   },
     addButtonText: {
         color: 'white',
-        fontsize : 25,
+        fontSize : 25,
   },
 });
