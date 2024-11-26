@@ -11,12 +11,14 @@
     "ios-16": "react-native run-ios --simulator='iPhone 16'"
   },
   "dependencies": {
+    "@react-native-community/push-notification-ios": "^1.11.0",
     "@react-navigation/bottom-tabs": "^7.0.6",
     "@react-navigation/material-top-tabs": "^7.0.6",
     "@react-navigation/native": "^7.0.3",
     "@react-navigation/native-stack": "^7.1.0",
     "react": "18.3.1",
     "react-native": "0.76.2",
+    "react-native-push-notification": "^8.1.1",
     "react-native-safe-area-context": "^4.14.0",
     "react-native-screens": "^4.2.0",
     "react-native-status-bar-height": "^2.6.0",
