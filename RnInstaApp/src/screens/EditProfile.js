@@ -34,64 +34,74 @@ const EditProfile = ({route, navigation}) => {
           프로필 사진 바꾸기
         </Text>
       </View>
-      <View style={{paddingVertical: 10}}>
-        <View>
-          <Text style={{opacity: 0.5}}>이름</Text>
-          <TextInput
-            placeholder="이름"
-            defaultValue={name}
-            style={{
-              fontSize: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: '#CDCDCD',
-            }}
-          />
-        </View>
-      </View>
 
-      <View style={{paddingVertical: 10}}>
-        <View>
-          <Text style={{opacity: 0.5}}>사용자 이름</Text>
-          <TextInput
-            placeholder="사용자 이름"
-            defaultValue={accountName}
-            style={{
-              fontSize: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: '#CDCDCD',
-            }}
-          />
+      <View style={{paddingHorizontal: 15}}>
+        <View style={{paddingVertical: 10}}>
+          <View>
+            <Text style={{opacity: 0.5}}>이름</Text>
+            <TextInput
+              placeholder="이름"
+              defaultValue={name}
+              style={{
+                fontSize: 16,
+                marginTop: 4,
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD',
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <View style={{paddingVertical: 10}}>
-        <View>
-          <Text style={{opacity: 0.5}}>웹사이트</Text>
-          <TextInput
-            placeholder="웹사이트"
-            style={{
-              fontSize: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: '#CDCDCD',
-            }}
-          />
+        <View style={{paddingVertical: 10}}>
+          <View>
+            <Text style={{opacity: 0.5}}>사용자 이름</Text>
+            <TextInput
+              placeholder="사용자 이름"
+              defaultValue={accountName}
+              style={{
+                fontSize: 16,
+                marginTop: 4,
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD',
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <View style={{paddingVertical: 10}}>
-        <View>
-          <Text style={{opacity: 0.5}}>소개</Text>
-          <TextInput
-            placeholder="소개"
-            style={{
-              fontSize: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: '#CDCDCD',
-            }}
-          />
+        <View style={{paddingVertical: 10}}>
+          <View>
+            <Text style={{opacity: 0.5}}>웹사이트</Text>
+            <TextInput
+              placeholder="웹사이트"
+              style={{
+                fontSize: 16,
+                marginTop: 4,
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD',
+              }}
+            />
+          </View>
+        </View>
+        <View style={{paddingVertical: 10}}>
+          <View>
+            <Text style={{opacity: 0.5}}>소개</Text>
+            <TextInput
+              placeholder="소개"
+              style={{
+                fontSize: 16,
+                marginTop: 4,
+                borderBottomWidth: 1,
+                borderBottomColor: '#CDCDCD',
+              }}
+            />
+          </View>
         </View>
       </View>
       <View>
-        <Text style={{marginVertical : 5,padding : 10, color : '#3493D9'}}>프로페셔널 계정으로 전환</Text>
-        <Text style={{ marginVertical: 5, padding: 10, color: '#3493D9' }}>개인정보 설정</Text>
+        <Text style={{marginVertical: 5, padding: 10, color: '#3493D9'}}>
+          프로페셔널 계정으로 전환
+        </Text>
+        <Text style={{marginVertical: 5, padding: 10, color: '#3493D9'}}>
+          개인정보 설정
+        </Text>
       </View>
     </SafeAreaView>
   );

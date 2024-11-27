@@ -1,16 +1,16 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native'
-import Ionic from 'react-native-vector-icons/Ionicons'
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import React from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import Ionic from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
-import ProfileBody from '../components/ProfileBody'
-import ProfileButton from '../components/ProfileButton'
-import FriendItem from '../components/FriendItem'
-import { FriendsProfileData } from '../components/Database'
+import ProfileBody from '../components/Profile/ProfileBody';
+import ProfileButton from '../components/Profile/ProfileButton';
+import FriendItem from '../components/Home/FriendItem';
+import {FriendsProfileData} from '../components/Db/Database';
 
 const FriendProfile = ({route, navigation}) => {
-  const { name, profileImage, post, followers, following } = route.params;
+  const {name, profileImage, post, followers, following} = route.params;
 
   return (
     <SafeAreaView style={{width: '100%', backgroundColor: 'white'}}>
@@ -46,7 +46,10 @@ const FriendProfile = ({route, navigation}) => {
         <Text style={{paddingVertical: 10, fontSize: 15, fontWeight: 'bold'}}>
           회원님을 위한 추천
         </Text>
-        <ScrollView horizontal = {true} showsHorizontalScrollIndicator={false} style={{paddingTop : 10}}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{paddingTop: 10}}>
           {name === FriendsProfileData.name
             ? null
             : FriendsProfileData.map((data, index) => (
@@ -56,6 +59,6 @@ const FriendProfile = ({route, navigation}) => {
       </View>
     </SafeAreaView>
   );
-}
+};
 
-export default FriendProfile
+export default FriendProfile;

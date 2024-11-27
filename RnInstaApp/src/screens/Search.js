@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, StatusBar, Image, Dimensions, Platform } from 'react-native'
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import SearchInput from '../components/SearchInput';
-import SearchContent from '../components/SearchContent';
+import SearchInput from '../components/Search/SearchInput';
+import SearchContent from '../components/Search/SearchContent';
 import Inoicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import { getStatusBarHeight } from 'react-native-status-bar-height';

@@ -1,10 +1,10 @@
-import { View, Text, ScrollView, FlatList } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import {View, Text, ScrollView, FlatList} from 'react-native';
+import React from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import ActivityPrevious from '../components/Activity/ActivityPrevious';
 import ActivityRecommend from '../components/Activity/ActivityRecommend';
 import ActivityThisWeek from '../components/Activity/ActivityThisWeek';
-import { FriendsProfileData } from '../components/Database';
+import {FriendsProfileData} from '../components/Db/Database';
 
 const Activity = () => {
   return (
@@ -24,9 +24,9 @@ const Activity = () => {
 
         <Text style={{fontWeight: 'bold', paddingVertical: 10}}>이전 활동</Text>
 
-          {FriendsProfileData.slice(3, 6).map((data, index) => (
-            <ActivityPrevious data={data} key={index} />
-          ))}
+        {FriendsProfileData.slice(3, 6).map((data, index) => (
+          <ActivityPrevious data={data} key={index} />
+        ))}
         <Text style={{fontWeight: 'bold', paddingVertical: 10}}>
           회원님을 위한 추천
         </Text>
@@ -38,6 +38,6 @@ const Activity = () => {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
-export default Activity
+export default Activity;

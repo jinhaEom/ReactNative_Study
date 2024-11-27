@@ -3,7 +3,7 @@ export const FriendsProfileData = [
   {
     name: 'react',
     accountName: 'React',
-    profileImage: require('../../assets/images/profile4.jpeg'),
+    profileImage: require('../../../assets/images/profile4.jpeg'),
     posts: 30,
     followers: 31,
     following: 44,
@@ -12,7 +12,7 @@ export const FriendsProfileData = [
   {
     name: 'javascript',
     accountName: 'Javascript',
-    profileImage: require('../../assets/images/profile5.jpeg'),
+    profileImage: require('../../../assets/images/profile5.jpeg'),
     posts: 24,
     followers: 120,
     following: 600,
@@ -21,7 +21,7 @@ export const FriendsProfileData = [
   {
     name: 'vue',
     accountName: 'Vue',
-    profileImage: require('../../assets/images/profile2.jpeg'),
+    profileImage: require('../../../assets/images/profile2.jpeg'),
     posts: 21,
     followers: 7886,
     following: 32,
@@ -30,7 +30,7 @@ export const FriendsProfileData = [
   {
     name: 'angular',
     accountName: 'Angular',
-    profileImage: require('../../assets/images/post1.jpeg'),
+    profileImage: require('../../../assets/images/post1.jpeg'),
     posts: 123,
     followers: 64253,
     following: 32,
@@ -39,7 +39,7 @@ export const FriendsProfileData = [
   {
     name: 'svelt',
     accountName: 'Svelt',
-    profileImage: require('../../assets/images/post2.jpeg'),
+    profileImage: require('../../../assets/images/post2.jpeg'),
     posts: 56,
     followers: 6542,
     following: 43,
@@ -48,7 +48,7 @@ export const FriendsProfileData = [
   {
     name: 'go',
     accountName: 'Go',
-    profileImage: require('../../assets/images/post3.jpeg'),
+    profileImage: require('../../../assets/images/post3.jpeg'),
     posts: 452,
     followers: '564k',
     following: 31,
@@ -57,7 +57,7 @@ export const FriendsProfileData = [
   {
     name: 'nextjs',
     accountName: 'NextJS',
-    profileImage: require('../../assets/images/post4.jpeg'),
+    profileImage: require('../../../assets/images/post4.jpeg'),
     posts: 543,
     followers: '435k',
     following: 22,
@@ -66,7 +66,7 @@ export const FriendsProfileData = [
   {
     name: 'expressjs',
     accountName: 'ExpressJS',
-    profileImage: require('../../assets/images/post5.jpeg'),
+    profileImage: require('../../../assets/images/post5.jpeg'),
     posts: 234,
     followers: '763k',
     following: 332,
@@ -75,7 +75,7 @@ export const FriendsProfileData = [
   {
     name: 'java',
     accountName: 'Java',
-    profileImage: require('../../assets/images/post6.jpeg'),
+    profileImage: require('../../../assets/images/post6.jpeg'),
     posts: 111,
     followers: 11223,
     following: 1,
@@ -84,7 +84,7 @@ export const FriendsProfileData = [
   {
     name: 'deno',
     accountName: 'Deno',
-    profileImage: require('../../assets/images/post7.jpeg'),
+    profileImage: require('../../../assets/images/post7.jpeg'),
     posts: 121,
     followers: 43213,
     following: 21,
@@ -93,7 +93,7 @@ export const FriendsProfileData = [
   {
     name: 'nodejs',
     accountName: 'NodeJS',
-    profileImage: require('../../assets/images/post8.jpeg'),
+    profileImage: require('../../../assets/images/post8.jpeg'),
     posts: 432,
     followers: '987k',
     following: 24,
@@ -102,7 +102,7 @@ export const FriendsProfileData = [
   {
     name: 'python',
     accountName: 'Python',
-    profileImage: require('../../assets/images/post9.jpeg'),
+    profileImage: require('../../../assets/images/post9.jpeg'),
     posts: '1.2k',
     followers: '1.2M',
     following: 12,
@@ -111,7 +111,7 @@ export const FriendsProfileData = [
   {
     name: 'jquery',
     accountName: 'JQuery',
-    profileImage: require('../../assets/images/post10.jpeg'),
+    profileImage: require('../../../assets/images/post10.jpeg'),
     posts: 533,
     followers: 64322,
     following: 123,
