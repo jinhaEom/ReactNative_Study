@@ -11,7 +11,6 @@ import FriendList from './src/FriendList';
 import { useState } from 'react';
 import TabBar from './src/TabBar'
 import Profile from './src/Profile';
-
 export default function App() {
   const [isOpend, setIsOpend] = useState(true);
   const [selectedTabIdx, setSelectTabIdx] = useState(0);
