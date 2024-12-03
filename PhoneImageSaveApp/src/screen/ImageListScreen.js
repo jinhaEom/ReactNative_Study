@@ -10,7 +10,7 @@ const ImageListScreen = (props) => {
       <Header>
         <Text>Image List</Text>
       </Header>
-      <FlatList style={{ flex: 1 ,alignSelf:'center'}} data={IMAGE_LIST} renderItem={({ item }) => {
+      <FlatList style={{ flex: 1 ,alignSelf:'center',marginTop:4}} data={IMAGE_LIST} renderItem={({ item }) => {
         return(<PhotoListItem url={item}/>)
         
       }}/>
