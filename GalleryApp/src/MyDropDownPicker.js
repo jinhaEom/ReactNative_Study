@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Touchable } from "react-native";
+import { View, Text, TouchableOpacity, Touchable, Platform } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 const headerHeight = 50;
@@ -15,14 +15,21 @@ export default ({
   setSelectedAlbum,
 }) => {
   return (
-    <View>
+    <View
+      style={{
+        zIndex: 2, 
+        elevation: Platform.OS === "android" ? 5 : 0,
+        position: "relative", 
+      }}
+    >
+      {" "}
       <TouchableOpacity
         onPress={onPressHeader}
         activeOpacity={1}
         style={{
           height: headerHeight,
           justifyContent: "center",
-          alignItems: "center", 
+          alignItems: "center",
           flexDirection: "row",
         }}
       >
@@ -87,7 +94,7 @@ export default ({
                   style={{ position: "absolute", right: 10 }}
                 >
                   <Ionicons
-                    name={album.title === '기본' ? undefined : 'close'}
+                    name={album.title === "기본" ? undefined : "close"}
                     size={20}
                     color="black"
                   />
@@ -95,8 +102,6 @@ export default ({
               </TouchableOpacity>
             );
           })}
-                        
-
         </View>
       )}
     </View>

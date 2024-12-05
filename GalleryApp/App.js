@@ -113,7 +113,7 @@ export default function App() {
             backgroundColor: "lightgrey",
             justifyContent: "center",
             alignItems: "center",
-            
+            zIndex: 2
           }}
         >
           <Text style={{ fontWeight: "100", fontSize: 45 }}>+</Text>
@@ -164,7 +164,7 @@ export default function App() {
         numColumns={3}
         data={imagesWithAddButton}
         renderItem={renderItem}
-        style={{ zIndex: -1 }}
+        style={{ zIndex: 1 }}
       />
       <Toast/>
     </SafeAreaView>
