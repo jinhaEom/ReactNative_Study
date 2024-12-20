@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93566483382",
+    "project_id": "favoriteresturant",
+    "storage_bucket": "favoriteresturant.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93566483382:android:fec8d70d58ba57726a5f17",
+        "android_client_info": {
+          "package_name": "com.favoriterestraunt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANESYWJDOnlczFwGgbtTbOaxX3_zQSkIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,1 @@
+/Users/jinhaeom/Desktop/ReactNative_Study/FavoriteRestraunt/node_modules/react-native-vector-icons/Fonts
