@@ -1,0 +1,4 @@
+// API Keys
+KAKAO_APP_KEY = your_kakao_app_key_here
+KAKAO_APP_SCHEME = kakao$(KAKAO_APP_KEY)
+GOOGLE_MAPS_API_KEY = your_google_maps_api_key_here
