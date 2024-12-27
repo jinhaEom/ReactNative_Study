@@ -1,22 +1,21 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar, useColorScheme } from "react-native"
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { RootNavigation } from "./src/navigations/RootNavigation";
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {RootNavigation} from './src/navigations/RootNavigation';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
 
 export default function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle ={ 
-    backgroundColor : isDarkMode ? '#f8f8f8' : '#e9e9e9',
-  };
-  return(
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-      backgroundColor={backgroundStyle.backgroundColor}/>
-
+  return (
+    <GestureHandlerRootView style={styles.container}>
       <NavigationContainer>
-        <RootNavigation/>
+        <RootNavigation />
       </NavigationContainer>
-    </SafeAreaProvider>
-  )
+    </GestureHandlerRootView>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

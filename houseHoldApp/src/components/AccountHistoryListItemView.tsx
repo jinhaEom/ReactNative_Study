@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { AccountBookHistory } from '../data/AccountBookHistory';
 import { Button } from './Button';
 import { Icon } from './Icons';
@@ -13,14 +13,16 @@ export const AccountHistoryListItemView : React.FC<{item:AccountBookHistory, onP
         <Button onPress={() => props.onPressItem(props.item)}>
             <View style={{paddingVertical : 12, paddingHorizontal : 16, flexDirection: 'row', alignItems:'center'}}>
                 <Icon
-                    name={props.item.type==='사용' ? 'remove-circle': 'add-circle'}
+                    name={props.item.type === '사용' ? 'remove-circle' : 'add-circle'}
                     size={24}
-                    color={props.item.type==='사용' ? 'red': 'blue'}
+                    color={props.item.type === '사용' ? 'red' : 'blue'}
                 />
                 <View style={{flex : 1, marginLeft : 12}}>
                     <Typography fontSize={16} color={'black'}>{props.item.comment}</Typography>
                     <Spacer space={4}/>
                     <Typography fontSize={12} color={'gray'}>{convertToDateString(props.item.createdAt)}</Typography>
+                    <Spacer space={4}/>
+                    <Typography fontSize={12} color={'black'}>{props.item.price.toString()} 원</Typography>
                 </View>
                 {props.item.photoUrl !== null && (
                     <>
@@ -32,10 +34,9 @@ export const AccountHistoryListItemView : React.FC<{item:AccountBookHistory, onP
                         style={{borderRadius : 10}}
                     />
                     </>
-                  
+
                 )}
             </View>
             </Button>
     )
 }
-    

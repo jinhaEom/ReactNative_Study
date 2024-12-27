@@ -3,9 +3,9 @@ export const convertToDateString = (time : number) => {
     
     const addZeroIfOneCharacter = (number : number) => {
         if(number<10){
-            return `-0${number}`
+            return `0${number}`
         }
         return number.toString();
     }
-    return `${date.getFullYear()}-${addZeroIfOneCharacter(date.getMonth()+1)}-${addZeroIfOneCharacter(date.getDate())} ${addZeroIfOneCharacter(date.getHours())}:${addZeroIfOneCharacter(date.getMinutes())}:${addZeroIfOneCharacter(date.getSeconds())}`
+    return `${date.getFullYear()}-${addZeroIfOneCharacter(date.getMonth()+1)}-${addZeroIfOneCharacter(date.getDate())}-${addZeroIfOneCharacter(date.getHours())}:${addZeroIfOneCharacter(date.getMinutes())}`
 }

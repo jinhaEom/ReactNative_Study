@@ -1,22 +1,23 @@
-import React, { useCallback, useState } from "react";
-import { Header } from "../components/Header/Header"
-
-import { ScrollView, View } from "react-native";
-import { useRootNavigation, useRootRoute } from "../navigations/RootNavigation";
-import { Button } from "../components/Button";
-import { AccountBookHistory } from "../data/AccountBookHistory";
-import { Typography } from "../components/Typography";
-import { Spacer } from "../components/Spacer";
-import { SingleLineInput } from "../components/SingleLineInput";
-import { Icon } from "../components/Icons";
+import React, { useCallback, useState, useEffect } from 'react';
+import { Header } from '../components/Header/Header';
+import { ScrollView, View } from 'react-native';
+import { useRootNavigation, useRootRoute } from '../navigations/RootNavigation';
+import { Button } from '../components/Button';
+import { AccountBookHistory } from '../data/AccountBookHistory';
+import { Typography } from '../components/Typography';
+import { Spacer } from '../components/Spacer';
+import { SingleLineInput } from '../components/SingleLineInput';
+import { Icon } from '../components/Icons';
 import { convertToDateString } from '../utils/DateUtils';
-import { MultiLineInput } from "../components/MultiLineInput";
-
+import { MultiLineInput } from '../components/MultiLineInput';
+import { useAccountHistoryItem } from '../hooks/useAccountHookHistoryItem';
+import { RemoteImage } from '../components/RemoteImage';
 
 export const AddUpdateScreen: React.FC = () => {
     const navigation = useRootNavigation<'Add' | 'Update'>();
     const routes = useRootRoute<'Add' | 'Update'>();
 
+    const {insertItem,updateItem} = useAccountHistoryItem();
     const [item, setItem] = useState<AccountBookHistory>(
 
         routes.params?.item ?? {
@@ -26,7 +27,7 @@ export const AddUpdateScreen: React.FC = () => {
             date: 0,
             createdAt: 0,
             updatedAt: 0,
-            photoUrl: null
+            photoUrl: null,
 
         })
     const onPressType = useCallback<(type: AccountBookHistory['type']) => void>(
@@ -42,14 +43,14 @@ export const AddUpdateScreen: React.FC = () => {
             });
         }, [routes.name],
     )
-    const onChangePrice = useCallback<(test: string) => void>(text => {
+    const onChangePrice = useCallback<(text: string) => void>(text => {
         setItem(prevItem => {
             return {
                 ...prevItem,
-                price: parseInt(text),
+                price: text === '' ? 0 : parseInt(text, 10) || 0,
             };
         });
-    }, [])
+    }, []);
     const onChangeComment = useCallback<(text:string)=>void>((text) =>{
         setItem(prevItem => {
             return {
@@ -60,8 +61,27 @@ export const AddUpdateScreen: React.FC = () => {
     },[])
 
     const onPressPhoto = useCallback(() => {
+        navigation.push('TakePhoto', {
+            onTakePhoto : url => {
+                setItem(prevState => ({
+                    ...prevState,
+                    photoUrl: url,
+                }));
+            }
+        });
+    },[navigation]);
 
-    }, [])
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('photoSelected', (event: any) => {
+            const photoUrl = event.data;
+            setItem(prevItem => ({
+                ...prevItem,
+                photoUrl: photoUrl,
+            }));
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     const onPressCalendar = useCallback(() => {
         navigation.navigate('CalenderSelect', {
@@ -72,12 +92,25 @@ export const AddUpdateScreen: React.FC = () => {
                         date: date,
                     };
                 });
-            }
-        })
-    }, [navigation])
-    const onPressSave = useCallback(() => {
+            },
+        });
+    }, [navigation]);
 
-    }, [])
+    const onPressSave = useCallback(async () => {
+        try {
+            if(routes.name === 'Add'){
+                await insertItem(item);
+                navigation.goBack();
+            }
+            if(routes.name === 'Update'){
+                const updatedItem = await updateItem(item);
+                routes.params?.onChangeData?.(updatedItem);
+                navigation.goBack();
+            }
+        } catch (error) {
+            console.error('Save error:', error);
+        }
+    }, [routes.name, insertItem, item, navigation, updateItem, routes.params]);
     return (
         <View style={{ flex: 1 }}>
             <Header>
@@ -86,20 +119,20 @@ export const AddUpdateScreen: React.FC = () => {
                     navigation.goBack();
                 }} />
             </Header>
-            <ScrollView style={{ flex: 1, }}
+            <ScrollView style={{ flex: 1,}}
                 contentContainerStyle={{ paddingTop: 32, paddingHorizontal: 24 }}
             >
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
                         <Button onPress={() => onPressType('사용')}>
-                            <View style={{ backgroundColor: item.type === '사용' ? 'black' : 'white', alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderTopLeftRadius: 12, borderBottomLeftRadius: 12, }}>
-                                <Typography fontSize={20} color={item.type === '사용' ? 'white' : 'black'}>사용</Typography>
+                            <View style={{ backgroundColor: item.type === '사용' ? 'black' : 'white', alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderTopLeftRadius: 12, borderBottomLeftRadius: 12}}>
+                                <Typography fontSize={20} color={item.type === '사용' ? 'white' : 'black'}>사용</Typography>
                             </View>
                         </Button>
                     </View>
                     <View style={{ flex: 1 }}>
                         <Button onPress={() => onPressType('수입')}>
-                            <View style={{ backgroundColor: item.type === '사용' ? 'white' : 'black', alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderTopRightRadius: 12, borderBottomRightRadius: 12, }}>
+                            <View style={{ backgroundColor: item.type === '사용' ? 'white' : 'black', alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderTopRightRadius: 12, borderBottomRightRadius: 12}}>
                                 <Typography fontSize={20} color={item.type === '사용' ? 'black' : 'white'}>수입</Typography>
                             </View>
                         </Button>
@@ -111,7 +144,7 @@ export const AddUpdateScreen: React.FC = () => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ flex: 1 }}>
                         <SingleLineInput value={item.price === 0 ? '' : item.price.toString()}
-                            placeholder="금액을 입력하세요"
+                            placeholder="금액을 입력하세요"
                             onChangeText={onChangePrice}
                             keyboardType="number-pad"
                             onSubmitEditing={() => { }}
@@ -129,9 +162,14 @@ export const AddUpdateScreen: React.FC = () => {
                     </View>
                     <View style={{ marginLeft: 24 }}>
                         <Button onPress={onPressPhoto}>
-                            <View style={{ width: 100, height: 100, borderRadius: 12, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center' }}>
+                            {item.photoUrl ? (
+                                <RemoteImage url={item.photoUrl} width={100} height={100} style={{borderRadius: 12 }} />
+                            ):(
+                                <View style={{ width: 100, height: 100, borderRadius: 12, backgroundColor: 'lightgray', alignItems: 'center', justifyContent: 'center' }}>
                                 <Icon name="add" size={24} color="gray" />
                             </View>
+                            )}
+
                         </Button>
                     </View>
                 </View>
@@ -139,11 +177,14 @@ export const AddUpdateScreen: React.FC = () => {
                 <MultiLineInput onSubmitEditing={()=>{}} placeholder="어떤 일인가용?" value={item.comment} height={100} onChangeText={onChangeComment}/>
                     <Spacer space={64} />
                     <Button onPress={onPressSave}>
-                        <View style={{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderRadius: 4, }}>
-                            <Typography fontSize={16} color="white">{item.type === '사용' ? '저장하기' : '수정하기'}</Typography>
+                        <View style={{ backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderRadius: 4 }}>
+                            <Typography fontSize={16} color="white">
+                                {routes.name === 'Add' ? '저장하기' : '수정하기'}
+                            </Typography>
                         </View>
                     </Button>
             </ScrollView>
         </View>
-    )
-}
+
+    );
+};
