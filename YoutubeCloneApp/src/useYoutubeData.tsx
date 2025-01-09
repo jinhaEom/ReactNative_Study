@@ -75,7 +75,7 @@ const axiosInstance = axios.create({
 
 });
 
-const API_KEY = '';
+const API_KEY = 'AIzaSyBoPKC-_SjNRZyhclAjw3ykb8_89VI7xZQ';
 export const useYoutubeData = () => {
     const [data, setData] = useState<TypeListItem[]>([]);
     const [hasNextPage, setHasNextPage] = useState(true);
