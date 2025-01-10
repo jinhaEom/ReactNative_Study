@@ -1,6 +1,5 @@
 import React from 'react';
 import { IntroScreen } from '../screens/IntroScreen';
-import { MainScreen } from '../screens/MainScreen';
 import { SignupNavigation, TypeSignUpNavigation } from './SignupNavigation';
 import { HistoryListScreen } from '../screens/HistoryListScreen';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -8,12 +7,14 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { BottomTabNavigation } from './BottomTabNavigation';
+import { TakePhotoScreen } from '../screens/TakePhotoScreen';
 
 type TypeRootStackNavigation = {
     Intro: undefined;
     SignUp: NavigatorScreenParams<TypeSignUpNavigation>;
     Main: undefined;
     HistoryList: undefined;
+    TakePhoto: {onTakePhoto : (uri:string) => void};
 }
 const Stack = createNativeStackNavigator<TypeRootStackNavigation>();
 
@@ -24,6 +25,7 @@ export const RootStackNavigation : React.FC = () => {
             <Stack.Screen name="SignUp" component={SignupNavigation} />
             <Stack.Screen name="Main" component={BottomTabNavigation} />
             <Stack.Screen name="HistoryList" component={HistoryListScreen} />
+            <Stack.Screen name="TakePhoto" component={TakePhotoScreen}/>
         </Stack.Navigator>
     );
 };
