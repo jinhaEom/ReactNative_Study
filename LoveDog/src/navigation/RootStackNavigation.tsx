@@ -1,37 +1,59 @@
-import React from 'react';
-import { IntroScreen } from '../screens/IntroScreen';
-import { SignupNavigation, TypeSignUpNavigation } from './SignupNavigation';
-import { HistoryListScreen } from '../screens/HistoryListScreen';
-import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
-import { BottomTabNavigation } from './BottomTabNavigation';
-import { TakePhotoScreen } from '../screens/TakePhotoScreen';
-
-type TypeRootStackNavigation = {
+import {
+    NavigatorScreenParams,
+    RouteProp,
+    useNavigation,
+    useRoute,
+  } from '@react-navigation/native';
+  import {
+    createNativeStackNavigator,
+    NativeStackNavigationProp,
+  } from '@react-navigation/native-stack';
+  import React from 'react';
+  import {useSelector} from 'react-redux';
+  import {HistoryListScreen} from '../screens/HistoryListScreen';
+  import {IntroScreen} from '../screens/IntroScreen';
+  import {TakePhotoScreen} from '../screens/TakePhotoScreen';
+  import {TypeRootReducer} from '../store';
+  import {BottomTabNavigation} from './BottomTabNavigation';
+  import {SignupNavigation, TypeSignupNavigation} from './SignupNavigation';
+  
+  export type TypeRootStackNavigationParams = {
     Intro: undefined;
-    SignUp: NavigatorScreenParams<TypeSignUpNavigation>;
+    SignUp: NavigatorScreenParams<TypeSignupNavigation>;
     Main: undefined;
     HistoryList: undefined;
-    TakePhoto: {onTakePhoto : (uri:string) => void};
-}
-const Stack = createNativeStackNavigator<TypeRootStackNavigation>();
-
-export const RootStackNavigation : React.FC = () => {
-    return(
-        <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name="Intro" component={IntroScreen} />
-            <Stack.Screen name="SignUp" component={SignupNavigation} />
+    TakePhoto: {onTakePhoto: (uri: string) => void};
+  };
+  
+  const Stack = createNativeStackNavigator<TypeRootStackNavigationParams>();
+  
+  export const RootStackNavigation: React.FC = () => {
+    const isSignIn = useSelector<TypeRootReducer, boolean>(
+      state => state.user.user !== null,
+    );
+  
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Intro">
+        <Stack.Screen name="Intro" component={IntroScreen} />
+        {!isSignIn && <Stack.Screen name="SignUp" component={SignupNavigation} />}
+        {isSignIn && (
+          <>
             <Stack.Screen name="Main" component={BottomTabNavigation} />
             <Stack.Screen name="HistoryList" component={HistoryListScreen} />
-            <Stack.Screen name="TakePhoto" component={TakePhotoScreen}/>
-        </Stack.Navigator>
+          </>
+        )}
+        <Stack.Screen name="TakePhoto" component={TakePhotoScreen} />
+      </Stack.Navigator>
     );
-};
-
-export const useRootNavigation = <RouteName extends keyof TypeRootStackNavigation>() =>
-    useNavigation<NativeStackNavigationProp<TypeRootStackNavigation, RouteName>>();
-
-export const useRootRoute = <RouteName extends keyof TypeRootStackNavigation>() =>
-    useRoute<RouteProp<TypeRootStackNavigation, RouteName>>();
+  };
+  
+  export const useRootNavigation = <
+    RouteName extends keyof TypeRootStackNavigationParams,
+  >() =>
+    useNavigation<
+      NativeStackNavigationProp<TypeRootStackNavigationParams, RouteName>
+    >();
+  
+  export const useRootRoute = <
+    RouteName extends keyof TypeRootStackNavigationParams,
+  >() => useRoute<RouteProp<TypeRootStackNavigationParams, RouteName>>();

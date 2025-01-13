@@ -15,12 +15,15 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ActionSheet from 'react-native-actionsheet';
 import { uploadFile } from '../utils/FileUtils';
 import database from '@react-native-firebase/database';
+import { setUser } from '../actions/user';
+import { useDispatch } from 'react-redux';
 
 export const InputNameScreen : React.FC = () => {
     const rootNavigation = useRootNavigation<'SignUp'>();
     const navigation = useSignUpNavigation<'InputName'>();
     const routes = useSignUpRoute<'InputName'>();
     const actionSheetRef = useRef<ActionSheet>(null);
+    const dispatch = useDispatch();
 
     const [isLoading, setLoading] = useState(false);
     const [profileImage] = useState(routes.params.preInput.profileImage);
@@ -48,12 +51,25 @@ export const InputNameScreen : React.FC = () => {
             regeditAt : currentTime.toISOString(),
             lastLoginAt : currentTime.toISOString(),
         });
+
+        const userInfo = await reference.once('value').then((snapshot) => snapshot.val());
+        dispatch(setUser({
+            uid : routes.params.uid,
+            userEmail : userInfo.email,
+            userName : userInfo.name,
+            profileImage : userInfo.profile,
+        }));
+        rootNavigation.reset({
+            routes : [{name : 'Main'}],
+        });
+ 
+
         rootNavigation.reset({
             routes : [{name : 'Main'}],
         });
         setLoading(false);
         // rootNavigation.replace('Main');
-    }, [profileImage,selectedPhoto,inputName,routes.params.uid,routes.params.inputEmail,rootNavigation]);
+    }, [profileImage,selectedPhoto,inputName,routes.params.uid,routes.params.inputEmail,rootNavigation,dispatch]);
 
 
     const onPressProfileImage = useCallback(async() => {
