@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DogPhoto Render Test DogPhotoView Render Snapshot 1`] = `
+<Image
+  source={
+    {
+      "uri": "Test Message",
+    }
+  }
+  style={
+    [
+      undefined,
+      {
+        "height": 525,
+        "width": 525,
+      },
+    ]
+  }
+  testID="image"
+/>
+`;
+
+exports[`DogPhotoView 1`] = `
+<Image
+  source={
+    {
+      "uri": "https://images.dog.ceo/breeds/malamute/n02110063_10567.jpg",
+    }
+  }
+  style={
+    [
+      undefined,
+      {
+        "height": 525,
+        "width": 525,
+      },
+    ]
+  }
+  testID="image"
+/>
+`;

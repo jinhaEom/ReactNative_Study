@@ -1,7 +1,7 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { TypeDog } from '../data/TypeDog';
 import { TypeRootReducer } from '../store';
-import { createAxiosInstance } from '../utils/AxiosUtils';
+import { api } from '../utils/AxiosUtils';
 import database from '@react-native-firebase/database';
 
 export const GET_DOG_REQUEST = 'GET_DOG_REQUEST' as const;
@@ -52,7 +52,7 @@ export const getDog = () : TypeDogThunkAction=>async(dispatch) =>  {
     dispatch(getDogRequest());
 
     try{
-        const apiResult = await createAxiosInstance().get<{
+        const apiResult = await api.get<{
             message: string;
             status : string;
         }>('/breeds/image/random');
