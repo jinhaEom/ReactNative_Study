@@ -85,7 +85,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        missingDimesionStrategy "store","play"
+        missingDimensionStrategy "store","play"
     }
     signingConfigs {
         debug {
@@ -97,9 +97,13 @@ android {
     }
     buildTypes {
         debug {
+            resValue "string", "app_name", "LoveDog(Debug)"
+            applicationIdSuffix ".debug"
+
             signingConfig signingConfigs.debug
         }
         release {
+            resValue "string", "app_name", "LoveDog"
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug

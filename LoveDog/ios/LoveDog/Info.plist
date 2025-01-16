@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>LoveDog</string>
+	<string>${APP_DISPLAY_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,8 +27,11 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+        <!-- Release 환경 -->
 				<string>com.googleusercontent.apps.705409136322-3gve0pjckeuqqqcgai3lfmor6ne8c03f</string>
-			</array>
+        <!-- Debug 환경 -->
+        <string>com.googleusercontent.apps.705409136322-grjj29v1sjf032fvhua4g6sr38a34dgh</string>
+      </array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>

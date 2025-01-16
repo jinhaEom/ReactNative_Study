@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {Header} from '../components/Header/Header';
-
+import {Typography} from '../components/Typography';
 import {useRootNavigation} from '../navigation/RootStackNavigation';
 import {
   GoogleSignin,
@@ -130,6 +130,8 @@ export const IntroScreen: React.FC = () => {
           alignItems: 'center',
           paddingBottom: 32 + safeArea.bottom,
         }}>
+          <Typography fontSize={24}>{__DEV__ ? 'DEV' : 'PROD'}</Typography>
+          
         {visibleGoogleSigninButton && (
           <GoogleSigninButton onPress={onPressGoogleSignin} />
         )}

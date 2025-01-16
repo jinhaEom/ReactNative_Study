@@ -49,7 +49,7 @@ export const MainScreen : React.FC = () => {
             y : offset.value.y,
         }
     })
-    .onFinalize((event)=>{
+    .onFinalize(()=>{
         if(offset.value.x < -150){
             //왼쪽으로 넘어간 상태
             runOnJS(onPressDislike)();
