@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1002055006731",
+    "project_id": "chatapp-80d80",
+    "storage_bucket": "chatapp-80d80.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002055006731:android:061c6dc162910fac49e50e",
+        "android_client_info": {
+          "package_name": "com.jinhaEom.chattingApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzERVDdpzOfSLKweULPqINzv_qZdBCsDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
