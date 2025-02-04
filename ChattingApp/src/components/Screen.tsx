@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from './Colors';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,7 +15,6 @@ const styles = StyleSheet.create({
   left: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   center: {
     flex: 3,
@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  backButtonText: {
-    fontSize: 14,
+  backButtonIcon: {
+    fontSize: 20,
+    marginLeft: 20,
     color: Colors.BLACK,
   },
 });
@@ -54,7 +55,7 @@ const Screen = ({ title, children }: ScreenProps) => {
         <View style={styles.left}>
           {canGoBack() && (
             <TouchableOpacity onPress={onPressBackButton}>
-              <Text style={styles.backButtonText}>Back</Text>
+              <Ionicons name="arrow-back" style={styles.backButtonIcon} />
             </TouchableOpacity>
           )}
         </View>

@@ -5,7 +5,7 @@ export type RootStackParamList = {
   Loading: undefined;
   Chat: {
     userIds: string[];
-    other : User;
+    other: User;
   };
 };
 
@@ -18,10 +18,23 @@ export interface User {
 export enum Collections {
   USERS = 'users',
   CHATS = 'chats',
+  MESSAGES = 'messages',
 }
 
 export interface Chat {
-    id : string;
-    userIds : string[];
-    users: User[];
-};
+  id: string;
+  userIds: string[];
+  users: User[];
+}
+
+export interface Message {
+  id: string;
+  user: User;
+  text: string;
+  createdAt: Date;
+}
+export interface FirestoreMessageData {
+  text: string;
+  user: User;
+  createdAt: Date;
+}

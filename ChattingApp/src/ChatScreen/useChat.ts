@@ -1,4 +1,4 @@
-import { Chat, User } from '../types';
+import { Chat, FirestoreMessageData, Message, User } from '../types';
 import { useCallback, useState, useEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import _ from 'lodash';
@@ -10,7 +10,9 @@ const getChatKey = (userIds: string[]) => {
 const useChat = (userIds: string[]) => {
   const [chat, setChat] = useState<Chat | null>(null);
   const [loadingChat, setLoadingChat] = useState(false);
-
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [sending, setSending] = useState(false);
+  const [loadingMessages, setLoadingMessages] = useState(false);
   const loadChat = useCallback(async () => {
     try {
       setLoadingChat(true);
@@ -52,7 +54,70 @@ const useChat = (userIds: string[]) => {
     loadChat();
   }, [loadChat]);
 
-  return { chat, loadingChat };
+  const sendMessage = useCallback(async (text: string, user: User) => {
+    if (chat?.id == null) {
+      throw new Error('Chat is not loaded');
+    }
+    try {
+      setSending(true);
+      const data: FirestoreMessageData = {
+        text: text,
+        user: user,
+        createdAt: new Date(),
+      };
+      const doc = await firestore()
+        .collection(Collections.CHATS)
+        .doc(chat.id)
+        .collection(Collections.MESSAGES)
+        .add(data);
+      setMessages(prevMessages =>
+        prevMessages.concat([
+          {
+            id: doc.id,
+            ...data,
+          },
+        ]),
+      );
+    } finally {
+      setSending(false);
+    }
+  }, [chat?.id]);
+
+  const loadMessages = useCallback(async (chatId: string) => {
+    if (chat?.id == null) {
+      return;
+    }
+    try {
+      setLoadingMessages(true);
+      const messagesSnapshot = await firestore()
+        .collection(Collections.CHATS)
+        .doc(chatId)
+        .collection(Collections.MESSAGES)
+        .orderBy('createdAt', 'asc')
+        .get();
+
+        const ms = messagesSnapshot.docs.map<Message>(doc => {
+          const data = doc.data();
+          return {
+            id : doc.id,
+            user : data.user,
+            text : data.text,
+          createdAt: data.createdAt.toDate(),
+        };
+      });
+      setMessages(ms);
+    } finally {
+      setLoadingMessages(false);
+    }
+  }, [chat?.id]);
+
+  useEffect(() => {
+    if (chat?.id != null) {
+      loadMessages(chat.id);
+    }
+  }, [chat?.id, loadMessages]);
+
+  return { chat, loadingChat, messages, sendMessage, sending, loadingMessages };
 };
 
 export default useChat;
