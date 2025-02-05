@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,9 @@ import { useCallback } from 'react';
 import Colors from '../components/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AuthContext from '../components/AuthContext';
+import Message from './Message';
+import UserPhoto from '../components/UserPhoto';
+import moment from 'moment';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
   },
   messageList: {
     flex: 1,
+    marginVertical: 20,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -87,6 +91,26 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontSize: 16,
   },
+  myMessageContainer: {
+    marginTop: 12,
+    borderWidth: 1,
+    borderRadius: 12,
+    borderColor: Colors.GRAY,
+    marginLeft: 24,
+    padding: 10,
+    backgroundColor: Colors.GRAY,
+  },
+  otherMessageContainer: {
+    marginTop: 12,
+    borderWidth: 1,
+    marginRight: 24,
+    borderRadius: 12,
+    borderColor: Colors.GRAY,
+    padding: 10,
+  },
+  messageSeparator: {
+    height: 8,
+  },
 });
 const disableSendButtonStyle = [
   styles.sendButton,
@@ -95,13 +119,26 @@ const disableSendButtonStyle = [
 const ChatScreen = () => {
   const { params } = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
   const { other, userIds } = params;
-  const { loadingChat, chat, sendMessage, messages, loadingMessages } = useChat(userIds);
+  const {
+    loadingChat,
+    chat,
+    sendMessage,
+    messages,
+    loadingMessages,
+    updateMessageReadAt,
+    userToMessageReadAt,
+  } = useChat(userIds);
   const [text, setText] = useState('');
   const sendDisabled = useMemo(() => text.length === 0, [text]);
   const { user: me } = useContext(AuthContext);
   const loading = loadingChat || loadingMessages;
 
   console.log('messages', messages);
+  useEffect(() => {
+    if (me != null && messages.length > 0) {
+      updateMessageReadAt(me?.userId);
+    }
+  }, [me, messages.length, updateMessageReadAt]);
   const onChangeText = useCallback((newText: string) => {
     setText(newText);
   }, []);
@@ -123,27 +160,50 @@ const ChatScreen = () => {
           <FlatList
             data={chat.users}
             renderItem={({ item: user }) => (
-              <View style={styles.userProfile}>
-                <Text style={styles.userProfileText}>{user.name[0]}</Text>
-              </View>
+              <UserPhoto
+                size={34}
+                imageUrl={user.profileUrl}
+                style={styles.userProfile}
+                name={user.name}
+              />
             )}
             horizontal={true}
           />
         </View>
-      
-        <FlatList style={styles.messageList}
+
+        <FlatList
+          inverted={true}
+          style={styles.messageList}
           data={messages}
-          renderItem={({item : message}) => (
-            <View>
-              <Text>{message.user.name}</Text>
-              <Text>{message.text}</Text>
-              <Text>{message.createdAt.toISOString()}</Text>
-            </View>
+          renderItem={({ item: message }) => {
+            const user = chat.users.find(u => u.userId === message.user.userId);
+           const unreadUsers = chat.users.filter(u => {
+              const messageReadAt = userToMessageReadAt[u.userId] ?? null;
+              if (messageReadAt == null) {
+                return true;
+              }
+              return moment(messageReadAt).isBefore(message.createdAt);
+            });
+            const unreadCount = unreadUsers.length;
+            return (
+              <Message
+                unreadCount={unreadCount}
+                name={user?.name ?? ''}
+                text={message.text}
+                createdAt={message.createdAt}
+                isOtherMessage={message.user.userId !== me?.userId}
+                imageUrl={user?.profileUrl}
+              />
+            );
+          }}
+          ItemSeparatorComponent={() => (
+            <View style={styles.messageSeparator} />
           )}
-          />
+        />
         <View style={styles.inputContainer}>
           <View style={styles.textInputContainer}>
             <TextInput
+              placeholder="메시지 입력"
               style={styles.textInput}
               value={text}
               onChangeText={onChangeText}
@@ -159,7 +219,16 @@ const ChatScreen = () => {
         </View>
       </View>
     );
-  }, [chat, text, onChangeText, sendDisabled, onPressSendButton, messages]);
+  }, [
+    chat,
+    text,
+    onChangeText,
+    sendDisabled,
+    onPressSendButton,
+    messages,
+    me?.userId,
+    userToMessageReadAt,
+  ]);
 
   return (
     <Screen title={other.name}>

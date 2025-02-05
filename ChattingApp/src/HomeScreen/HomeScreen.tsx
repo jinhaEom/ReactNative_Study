@@ -15,6 +15,9 @@ import firestore from '@react-native-firebase/firestore';
 import { Collections, RootStackParamList, User } from '../types';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import Profile from './Profile';
+import UserPhoto from '../components/UserPhoto';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -69,6 +72,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.LIGHT_GRAY,
     borderRadius: 12,
     padding: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   otherNameText: {
     fontSize: 16,
@@ -80,22 +85,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.BLACK,
   },
-  seprator:{
-    height : 10,
+  seprator: {
+    height: 10,
   },
-  emptyText:{
+  emptyText: {
     color: Colors.BLACK,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: 20,
   },
+  profile: {
+    marginRight: 10,
+  },
+  userPhoto: {
+    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 const HomeScreen = () => {
-  const { user: me } = useContext(AuthContext);
+  const { user: me, updateProfileImage } = useContext(AuthContext);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-  const {navigate} = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   console.log('this is all users :', users);
   const onPressLogout = useCallback(() => {
     auth().signOut();
@@ -113,7 +127,15 @@ const HomeScreen = () => {
     } finally {
       setLoadingUsers(false);
     }
-  }, []);
+  }, [me?.userId]);
+  const onPressProfile = useCallback(async () => {
+    const image = await ImageCropPicker.openPicker({
+      cropping: true,
+      cropperCircleOverlay: true,
+    });
+    console.log('image', image);
+    await updateProfileImage(image.path);
+  }, [updateProfileImage]);
   const renderLoading = useCallback(() => {
     return (
       <View style={styles.loadingContainer}>
@@ -122,7 +144,10 @@ const HomeScreen = () => {
     );
   }, []);
   const ItemSeparator = useCallback(() => <View style={styles.seprator} />, []);
-  const renderEmpty = useCallback(() => <Text style={styles.emptyText}>사용자가 없습니다.</Text>, []);
+  const renderEmpty = useCallback(
+    () => <Text style={styles.emptyText}>사용자가 없습니다.</Text>,
+    [],
+  );
   useEffect(() => {
     loadUsers();
   }, [loadUsers]);
@@ -136,6 +161,12 @@ const HomeScreen = () => {
         <View>
           <Text style={styles.sectionTitleText}>나의 정보</Text>
           <View style={styles.userSectionContent}>
+            <Profile
+              style={styles.profile}
+              onPress={onPressProfile}
+              imageUrl={me.profileUrl}
+              text={me.name[0]}
+            />
             <View style={styles.myProfile}>
               <Text style={styles.myNameText}>{me.name}</Text>
               <Text style={styles.myEmailText}>{me.email}</Text>
@@ -157,9 +188,23 @@ const HomeScreen = () => {
                 style={styles.userList}
                 data={users}
                 renderItem={({ item: user }) => (
-                  <TouchableOpacity style={styles.userListItem} onPress={() => {navigate('Chat',{userIds:[me.userId,user.userId],other:user})}} >
-                    <Text style={styles.otherNameText}>{user.name}</Text>
-                    <Text style={styles.otherEmailText}>{user.email}</Text>
+                  <TouchableOpacity
+                    style={styles.userListItem}
+                    onPress={() => {
+                      navigate('Chat', {
+                        userIds: [me.userId, user.userId],
+                        other: user,
+                      });
+                    }}>
+                    <UserPhoto
+                      style={styles.userPhoto}
+                      imageUrl={user.profileUrl}
+                      name={user.name}
+                    />
+                    <View>
+                      <Text style={styles.otherNameText}>{user.name}</Text>
+                      <Text style={styles.otherEmailText}>{user.email}</Text>
+                    </View>
                   </TouchableOpacity>
                 )}
                 ItemSeparatorComponent={ItemSeparator}

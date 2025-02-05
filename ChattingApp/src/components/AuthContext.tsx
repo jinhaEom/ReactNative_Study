@@ -8,6 +8,7 @@ export interface AuthContextType {
   processingSignUp: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   processingSignIn: boolean;
+  updateProfileImage : (filepath : string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType>({
   processingSignUp: false,
   signIn: async () => {},
   processingSignIn: false,
+  updateProfileImage : async () => {},
 });
 
 export default AuthContext;
